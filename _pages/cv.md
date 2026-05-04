@@ -12,6 +12,7 @@ redirect_from:
 <a href="https://github.com/panjoel4/panjoel4.github.io/raw/master/CV%20-%20Izzul%20Qudsi_.pdf" class="btn btn--primary" target="_blank">
   Download Full CV
 </a>
+
 Profile
 ======
 
