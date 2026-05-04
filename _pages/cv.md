@@ -9,10 +9,9 @@ redirect_from:
 
 {% include base_path %}
 
-<a href="https://github.com/panjoel4/panjoel4.github.io/blob/master/CV%20-%20Izzul%20Qudsi_.pdf" class="btn btn--primary" target="_blank">
+<a href="https://github.com/panjoel4/panjoel4.github.io/raw/master/CV%20-%20Izzul%20Qudsi_.pdf" class="btn btn--primary" target="_blank">
   Download Full CV
 </a>
-
 Profile
 ======
 
