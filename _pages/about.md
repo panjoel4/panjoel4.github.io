@@ -57,6 +57,6 @@ A research group at the College of Petroleum Engineering and Geosciences, King F
 
 ## Professional profile
 
-I combine industry experience with academic research, working at the intersection of geology, data science, and applied artificial intelligence. Through this website, I share my publications, research activities, technical portfolio, talks, and selected projects related to digital geoscience and subsurface analytics.
+I combine industry experience with academic research, working at the intersection of geology, data science, and applied artificial intelligence. Through this website, I share my publications, research activities, technical portfolio, and selected projects related to digital geoscience and subsurface analytics.
 
 For collaboration, research discussion, consulting opportunities, or Geovartha Research Group activities, please connect with me through the links in the sidebar.
