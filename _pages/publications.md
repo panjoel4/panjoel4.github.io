@@ -5,7 +5,7 @@ permalink: /publications/
 author_profile: true
 ---
 
-<p>My research sits at the intersection of geoscience, data science, and applied AI — where subsurface interpretation meets reproducible scientific software.</p>
+<p>My research sits at the intersection of geoscience, data science, and applied AI - where subsurface interpretation meets reproducible scientific software.</p>
 
 <p>For a complete and up-to-date list of my publications, citations, and scholarly record, explore my profiles below:</p>
 

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07131f">
+  <meta name="description" content="Biochar Lens: client-side optical descriptor extraction from 365 nm UV images.">
+  <title>Biochar Lens | Biochar Arabia</title>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="stylesheet" href="assets/apps/biochar-lens/biochar-lens.css">
+</head>
+<body>
+  <p class="deployment-disclaimer">
+    This web-application is currently live at <a href="https://www.biochararabia.com/biochar-lens.html">www.biochararabia.com/biochar-lens.html</a>
+  </p>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <div class="brand-copy">
+        <p class="eyebrow">Spray–Shine–Snap workflow</p>
+        <h1>Biochar Lens</h1>
+        <p class="subtitle">Optical Screening Intelligence for Biochar MRV.</p>
+      </div>
+      <div class="brand-status">
+        <a href="https://www.biochararabia.com" aria-label="Back to Biochar Arabia home">
+          <img class="brand-logo" src="images/logo.png" alt="Biochar Arabia logo">
+        </a>
+        <div id="appStatus" class="status-pill status-loading" role="status" aria-live="polite">Loading BiocharLens…</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap app-shell">
+    <section class="notice" aria-label="Measurement note">
+      <strong>Screening measurement:</strong> these are relative image descriptors, not direct chemical measurements. Use consistent UV, camera, spray, and sample conditions for comparison.
+    </section>
+
+    <section class="card intake-card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">1 / Capture</p>
+          <h2>Load a UV image</h2>
+        </div>
+        <span class="section-note">Upload or use a camera</span>
+      </div>
+      <div class="capture-actions">
+        <label class="button button-primary file-button">
+          <span>Upload image</span>
+          <input id="fileInput" type="file" accept="image/*" capture="environment">
+        </label>
+        <button id="startCameraButton" class="button button-secondary" type="button">Use camera</button>
+        <button id="captureButton" class="button button-secondary" type="button" disabled>Capture frame</button>
+        <button id="stopCameraButton" class="button button-quiet" type="button" disabled>Stop camera</button>
+        <a class="button button-secondary" href="files/biochar%20images.zip" download="biochar images.zip">Download test images (ZIP)</a>
+      </div>
+      <div id="cameraPanel" class="camera-panel" hidden>
+        <video id="cameraVideo" autoplay playsinline muted></video>
+        <p class="camera-help">Place the petri dish inside the guide. Avoid direct glare from the UV source.</p>
+      </div>
+      <p id="captureStatus" class="helper-text">For comparable results, use a dark box, fixed distance, fixed camera settings, and a consistent sample layer.</p>
+    </section>
+
+    <section class="workspace-grid">
+      <div class="card image-card">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">2 / Region of interest</p>
+            <h2>Position the sample</h2>
+          </div>
+          <span id="imageInfo" class="section-note">No image loaded</span>
+        </div>
+        <div id="canvasStage" class="canvas-stage empty-stage">
+          <canvas id="previewCanvas" aria-label="Image preview and ROI selector"></canvas>
+          <div class="empty-message">Upload an image or capture a frame to begin.</div>
+        </div>
+        <div class="roi-controls">
+          <button id="centerRoiButton" class="button button-quiet" type="button" disabled>Center ROI</button>
+          <label>Center X <input id="roiX" type="range" min="0" max="100" value="50" disabled></label>
+          <label>Center Y <input id="roiY" type="range" min="0" max="100" value="50" disabled></label>
+          <label>Radius <input id="roiRadius" type="range" min="10" max="48" value="40" disabled></label>
+        </div>
+        <p class="helper-text">The ROI is the circular sample area used for all descriptors. Adjust the sliders so the circle stays inside the biochar and excludes the dish rim.</p>
+      </div>
+
+      <aside class="card settings-card">
+        <div class="section-heading compact">
+          <div>
+            <p class="eyebrow">3 / Conditions</p>
+            <h2>Analysis settings</h2>
+          </div>
+        </div>
+        <div class="form-grid">
+          <label>Sample ID<input id="sampleId" type="text" placeholder="e.g. Biochar-04"></label>
+          <label>UV wavelength (nm)<input id="uvWavelength" type="number" value="365" min="1" step="1"></label>
+          <label>Dish diameter (mm)<input id="dishDiameter" type="number" placeholder="Optional" min="1" step="0.1"></label>
+          <label>Bright threshold (0–255)<input id="threshold" type="number" value="55" min="1" max="254" step="1"></label>
+          <label>Spray volume (µL)<input id="sprayVolume" type="number" placeholder="Optional" min="0" step="0.1"></label>
+          <label>Drying time (min)<input id="dryingTime" type="number" placeholder="Optional" min="0" step="0.1"></label>
+        </div>
+        <div class="quality-note">
+          <strong>Scale note</strong>
+          <p>Enter the dish diameter to report hotspot density in count/cm². Without it, the app reports hotspot count per ROI.</p>
+        </div>
+        <button id="analyzeButton" class="button button-wide button-primary" type="button" disabled>Analyze image</button>
+      </aside>
+    </section>
+
+    <section id="resultsSection" class="card results-card" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">4 / Results</p>
+          <h2>Quantitative descriptors</h2>
+        </div>
+        <div class="result-actions">
+          <button id="downloadJsonButton" class="button button-secondary" type="button">Download JSON</button>
+          <button id="downloadCsvButton" class="button button-secondary" type="button">Download CSV</button>
+        </div>
+      </div>
+      <div id="qualityBanner" class="quality-banner" role="status"></div>
+      <div class="results-layout">
+        <div>
+          <div id="descriptorGrid" class="descriptor-grid"></div>
+          <div class="metadata-summary" id="metadataSummary"></div>
+        </div>
+        <div class="diagnostic-column">
+          <figure><canvas id="maskCanvas"></canvas><figcaption>Bright-area mask</figcaption></figure>
+          <figure><canvas id="hotspotCanvas"></canvas><figcaption>Hotspot overlay</figcaption></figure>
+          <figure><canvas id="colorMapCanvas"></canvas><figcaption>Intensity color map</figcaption></figure>
+        </div>
+      </div>
+      <details class="method-details">
+        <summary>How these values are calculated</summary>
+        <p>Mean and median intensity use grayscale pixels inside the circular ROI. Bright-area fraction uses the selected threshold. Hotspots are connected bright components after small-noise filtering. Heterogeneity is the coefficient of variation. Entropy uses the grayscale histogram. Radial uniformity compares average intensity across concentric rings.</p>
+      </details>
+    </section>
+
+    <section class="card safety-card">
+      <h2>Capture guidance</h2>
+      <div class="guidance-grid">
+        <p><span class="guidance-icon">01</span><span>Use a fixed 365&nbsp;nm UV source and keep the camera distance and angle consistent.</span></p>
+        <p><span class="guidance-icon">02</span><span>Use a dark enclosure and prevent the phone from seeing the UV lamp directly.</span></p>
+        <p><span class="guidance-icon">03</span><span>Do not treat these descriptors as a chemical identification without independent validation.</span></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">Client-side prototype for standardized UV optical screening.</div>
+  </footer>
+
+  <script>
+    window.Module = window.Module || {};
+    window.Module.onRuntimeInitialized = function () {
+      window.dispatchEvent(new Event('app-engine-ready'));
+    };
+  </script>
+  <script async src="https://docs.opencv.org/4.x/opencv.js"></script>
+  <script src="assets/apps/biochar-lens/biochar-lens.js"></script>
+</body>
+</html>

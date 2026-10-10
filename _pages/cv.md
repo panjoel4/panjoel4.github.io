@@ -25,7 +25,9 @@ Education
 
 * **Ph.D. in Geology**, King Fahd University of Petroleum and Minerals, Saudi Arabia, 2023–Present  
   GPA: 3.83/4.00  
-  Winner of GEO4.0 Digitalization in Geoscience Symposium Hackathon
+  [Winner of GEO4.0 Digitalization in Geoscience Symposium Hackathon](https://lnkd.in/p/d9x7SAaN)   
+  [Top-10 winners at KFUPM Dhahran Techno Valley Deep-Tech Ventures Program](https://lnkd.in/p/dF-Zvtuq)   
+  [Runner-Up at the Agentic Ai Hackathon 2025 by Ulster University, UK](https://lnkd.in/p/d2N8i2YH)   
 
 * **M.Sc. in Applied Earth Science**, University of Twente, The Netherlands, 2019  
   GPA: 7.9/10  
@@ -43,12 +45,12 @@ Experience
 
 * **2021–Present — Group Leader**, Geovartha.id  
   * Led and organized research, projects, and communication activities.
-  * Built web-app projects including Wellcast, Geothermie, and Spectral-Box.  
+  * Built scientific web-application projects including Wellcast, Geothermie, and Spectral-Box.  
   * More output from this group is available at: [https://www.geovartha.id](https://www.geovartha.id)
 
 * **2019–2023 — Technical Geoscience Specialist**, Horizon Perdana  
   * Delivered consultancy support for well and seismic interpretation and petrophysics.
-  * Led the Data Management team in initiating a web application and database infrastructure.
+  * Led the Data Management team in initiating a web application and database infrastructure [(Hope Solution)](https://www.youtube.com/watch?v=N-ymLwXvaOc).
   * Provided technical support for Elsiwave, OpendTect, and Completion Manager.
 
 * **2014–2017 — Geoscientist**, Trisakti University Oil and Gas Research Group / PUKESMIGAS  
